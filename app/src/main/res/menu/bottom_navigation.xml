@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/workoutItem"
+        android:icon="@drawable/ic_view_list_black_24dp"
+        android:title="Workout" />
+
+    <item
+        android:id="@+id/addItem"
+        android:icon="@drawable/ic_add_black_24dp"
+        android:title="Add exercise" />
+
+    <item
+        android:id="@+id/historyItem"
+        android:icon="@drawable/ic_history_black_24dp"
+        android:title="History" />
+
+</menu>

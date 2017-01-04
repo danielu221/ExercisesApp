@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="6dip" >
+
+
+    <TextView
+        android:id="@+id/item_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Exercise name"
+        android:textSize="18sp"
+        android:layout_marginLeft="17dp"
+        android:layout_marginStart="17dp"
+       />
+
+    <TextView
+        android:id="@+id/item_series"
+        android:text="4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:layout_below="@+id/item_name"
+        android:layout_alignLeft="@+id/item_name"
+        android:layout_alignStart="@+id/item_name" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:text="x"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/item_name"
+        android:layout_toRightOf="@+id/item_series"
+        android:layout_toEndOf="@+id/item_series"
+         />
+
+    <TextView
+        android:id="@+id/item_reps"
+        android:text="12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/item_name"
+        android:layout_toRightOf="@+id/textView2"
+        android:layout_toEndOf="@+id/textView2" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:text="reps"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/item_name"
+        android:layout_toRightOf="@+id/item_reps"
+        android:layout_toEndOf="@+id/item_reps"
+        android:layout_marginLeft="8sp"/>
+
+
+</RelativeLayout>
