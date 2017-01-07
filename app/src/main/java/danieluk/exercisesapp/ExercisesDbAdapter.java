@@ -27,7 +27,7 @@ public class ExercisesDbAdapter{
 
         private static final String DATABASE_NAME = "Exercises";
         private static final String SQLITE_TABLE = "Exercise";
-        private static final int DATABASE_VERSION = 5;
+        private static final int DATABASE_VERSION = 6;
 
         private final Context mCtx;
 
@@ -135,6 +135,7 @@ private static class DatabaseHelper extends SQLiteOpenHelper {
         return mCursor;
     }
 
+    // metoda do testów
     public void insertSomeExercises() {
 
         createExercise("Podnoszenie sztangielek na barki",1,15,0,"Ostatnia seria byla niepelna");
@@ -144,5 +145,12 @@ private static class DatabaseHelper extends SQLiteOpenHelper {
 
 
     }
+
+    //
+    public boolean deleteRowWithId(long id){
+        return mDb.delete(SQLITE_TABLE,KEY_ROWID+"="+Long.toString(id),null)>0;
+    }
+
+
 
 }
