@@ -2,17 +2,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/workoutItem"
+        android:id="@+id/menu_item_workout"
         android:icon="@drawable/ic_view_list_black_24dp"
         android:title="Workout" />
 
     <item
-        android:id="@+id/addItem"
+        android:id="@+id/menu_item_add"
         android:icon="@drawable/ic_add_black_24dp"
         android:title="Add exercise" />
 
     <item
-        android:id="@+id/historyItem"
+        android:id="@+id/menu_item_history"
         android:icon="@drawable/ic_history_black_24dp"
         android:title="History" />
 
