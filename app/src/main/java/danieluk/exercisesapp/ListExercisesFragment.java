@@ -1,5 +1,6 @@
 package danieluk.exercisesapp;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -11,6 +12,7 @@ import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
+
 
 import java.util.ArrayList;
 
@@ -25,6 +27,7 @@ public class ListExercisesFragment extends Fragment {
     private ListView listView;
     private ArrayList<Exercise> lExercise=new ArrayList<Exercise>();
     private CustomListAdapter dataAdapter;
+    private static  final int REQUEST_CODE=100;
     public ListExercisesFragment(){
     }
     @Override
@@ -36,29 +39,60 @@ public class ListExercisesFragment extends Fragment {
         dbHelper.open();
 
         //usuń wszystkie ćwiczenia - do testów
-        dbHelper.deleteAllExercises();
+        //dbHelper.deleteAllExercises();
         //Dodaj ćwiczenia przykładowe
-        dbHelper.insertSomeExercises();
+        //dbHelper.insertSomeExercises();
 
 
         //wygeneruj listę z bazy danych
         displayListView();
 
        listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
-           public void onItemClick(AdapterView<?> parent,View view,int position,long id){
-                Exercise exercise=(Exercise) listView.getItemAtPosition(position);
-                dbHelper.deleteRowWithId(exercise.getId());
-                lExercise.remove(exercise);
-                dataAdapter.notifyDataSetChanged();
-                Log.d(TAG,"pozycja" + Integer.toString(position));
-           }
+               public void onItemClick(AdapterView<?> parent,View view,int position,long id){
+                   Exercise exercise=(Exercise) listView.getItemAtPosition(position);
+                   //dbHelper.deleteRowWithId(exercise.getId());
+                   Intent intent = new Intent(getContext(),ListDetail.class);
+                   intent.putExtra("id",exercise.getId());
+                   intent.putExtra("name",exercise.getName());
+                   intent.putExtra("series",exercise.getSeries());
+                   intent.putExtra("reps",exercise.getReps());
+                   intent.putExtra("weights",exercise.getWeights());
+                   intent.putExtra("notes",exercise.getNotes());
+                   //startActivity(intent);
+                   startActivityForResult(intent,REQUEST_CODE);
+                   //lExercise.remove(exercise);
+                   //dataAdapter.notifyDataSetChanged();
+                   //Log.d(TAG,"pozycja" + Integer.toString(position));
+               }
        });
-
-
 
         return view;
     }
 
+    @Override
+    public void onActivityResult(int requestCode,int resultCode,Intent data){
+        if(requestCode==REQUEST_CODE){
+            if(resultCode==getActivity().RESULT_OK){
+                long id=data.getLongExtra("id",-1);
+                if(id!=-1){
+                    deleteExerciseWithID(id);
+                }
+            }
+        }
+
+        super.onActivityResult(requestCode,resultCode,data);
+    }
+
+
+    private void deleteExerciseWithID(long id){
+        for(Exercise e:lExercise){
+            if( e.getId()==id ){
+                dbHelper.deleteRowWithId(id);
+                lExercise.remove(e);
+                dataAdapter.notifyDataSetChanged();
+            }
+        }
+    }
     private void displayListView() {
         Cursor cursor = dbHelper.fetchAllExercises();
 
