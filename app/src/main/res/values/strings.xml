@@ -10,6 +10,6 @@
     <string name="err_msg_name">Enter your full name</string>
     <string name="err_msg_series">Enter right series value (series > 0)</string>
     <string name="err_msg_reps">Enter right reps value (reps > 0)</string>
-    <string name="err_msg_weights">Enter right reps value (reps > 0)</string>
+    <string name="err_msg_weights">Enter right weights value (weights >= 0)</string>
 
 </resources>

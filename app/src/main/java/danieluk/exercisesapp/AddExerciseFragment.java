@@ -1,6 +1,7 @@
 package danieluk.exercisesapp;
 
 
+
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
@@ -11,6 +12,9 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by Danielu on 2017-01-04.
@@ -58,8 +62,11 @@ public class AddExerciseFragment extends Fragment {
         if (!validateSeries()) {
             return;
         }
-
         if (!validateReps()) {
+            return;
+        }
+
+        if (!validateWeights()) {
             return;
         }
         dbHelper = new ExercisesDbAdapter(getActivity());
@@ -70,7 +77,11 @@ public class AddExerciseFragment extends Fragment {
         int inputWeightsInt=Integer.parseInt(inputWeights.getText().toString());
         String inputNotesStr=inputNotes.getText().toString();
 
-        dbHelper.createExercise(inputNameStr,inputSeriesInt,inputRepsInt,inputWeightsInt,inputNotesStr);
+        //dodawanie daty
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String date=sdf.format(new Date());
+
+        dbHelper.createExercise(inputNameStr,inputSeriesInt,inputRepsInt,inputWeightsInt,inputNotesStr,date);
         dbHelper.close();
 
         clearInputs();
@@ -111,6 +122,20 @@ public class AddExerciseFragment extends Fragment {
             return false;
         } else {
             inputLayoutReps.setErrorEnabled(false);
+        }
+
+        return true;
+    }
+
+    private boolean validateWeights() {
+        String weights = inputWeights.getText().toString().trim();
+
+        if (weights.isEmpty() ) {
+            inputLayoutWeights.setError(getString(R.string.err_msg_weights));
+            requestFocus(inputWeights);
+            return false;
+        } else {
+            inputLayoutWeights.setErrorEnabled(false);
         }
 
         return true;
