@@ -3,6 +3,7 @@ package danieluk.exercisesapp;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,7 @@ public class CustomListAdapter extends ArrayAdapter<Exercise> {
     private Activity activity;
     private ArrayList<Exercise> lExercise;
     private static LayoutInflater inflater = null;
+    public static String prevDate=null;
 
     public CustomListAdapter (Activity activity, int textViewResourceId,ArrayList<Exercise> _lExercise) {
         super(activity, textViewResourceId, _lExercise);
@@ -46,42 +48,48 @@ public class CustomListAdapter extends ArrayAdapter<Exercise> {
         return position;
     }
 
-    public static class ViewHolder {
-        public TextView name;
-        public TextView series;
-        public TextView reps;
-
-    }
-
+    @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View vi = convertView;
-        final ViewHolder holder;
+
+        //String prevDate=null;
         try {
+            View vi = null;
+            Exercise exercise=getItem(position);
+
             if (convertView == null) {
                 vi = inflater.inflate(R.layout.exercise_info, null);
-                holder = new ViewHolder();
-
-                holder.name = (TextView) vi.findViewById(R.id.item_name);
-                holder.series=(TextView)vi.findViewById(R.id.item_series);
-                holder.reps=(TextView)vi.findViewById(R.id.item_reps);
-
-
-                vi.setTag(holder);
             } else {
-                holder = (ViewHolder) vi.getTag();
+
+                vi=convertView;
             }
+            String thisDate=exercise.getDate();
 
 
+            TextView name=(TextView) vi.findViewById(R.id.item_name);
+            TextView series=(TextView)vi.findViewById(R.id.item_series);
+            TextView reps=(TextView)vi.findViewById(R.id.item_reps);
+            TextView date=(TextView)vi.findViewById(R.id.item_date);
 
-            holder.name.setText(lExercise.get(position).name);
-            holder.series.setText(lExercise.get(position).series);
-            holder.reps.setText(lExercise.get(position).reps);
+            if (prevDate == null || !prevDate.equals(thisDate) || position==0) {
+               date.setVisibility(View.VISIBLE);
+            } else {
+               date.setVisibility(View.GONE);
+            }
+            prevDate=thisDate;
 
+            Log.d("CustomListAdapter","prevDate: "+prevDate+" thisDate: "+thisDate);
+
+            name.setText(exercise.getName());
+            series.setText(Integer.toString(exercise.getSeries()));
+            reps.setText(Integer.toString(exercise.getReps()));
+            date.setText(exercise.getDate());
+
+            return vi;
 
         } catch (Exception e) {
-
+            return null;
 
         }
-        return vi;
+
     }
 }
