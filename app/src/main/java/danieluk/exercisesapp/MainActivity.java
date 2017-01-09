@@ -24,7 +24,6 @@ public class MainActivity extends AppCompatActivity {
 
         bottomNavigationView = (BottomNavigationView)
                 findViewById(R.id.bottom_navigation_view);
-        //bottomNavigationView.inflateMenu(R.menu.bottom_navigation);
 
         fragmentManager = getSupportFragmentManager();
         final FragmentTransaction transactionStart = fragmentManager.beginTransaction();

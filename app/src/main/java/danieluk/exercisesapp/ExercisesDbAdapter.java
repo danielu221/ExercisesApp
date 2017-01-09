@@ -19,6 +19,7 @@ public class ExercisesDbAdapter{
         public static final String KEY_REPS = "reps";
         public static final String KEY_WEIGHTS = "weights";
         public static final String KEY_NOTES = "notes";
+        public static final String KEY_DATE = "exercise_date";
 
 
         private static final String TAG = "ExercisesDbAdapter";
@@ -27,7 +28,7 @@ public class ExercisesDbAdapter{
 
         private static final String DATABASE_NAME = "Exercises";
         private static final String SQLITE_TABLE = "Exercise";
-        private static final int DATABASE_VERSION = 6;
+        private static final int DATABASE_VERSION = 7;
 
         private final Context mCtx;
 
@@ -38,7 +39,8 @@ public class ExercisesDbAdapter{
                         KEY_SERIES +"," +
                         KEY_REPS +"," +
                         KEY_WEIGHTS +"," +
-                        KEY_NOTES +
+                        KEY_NOTES +"," +
+                        KEY_DATE +
                         ");";
 
 private static class DatabaseHelper extends SQLiteOpenHelper {
@@ -79,7 +81,7 @@ private static class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    public long createExercise(String name, int series,int reps,int weights,String notes) {
+    public long createExercise(String name, int series,int reps,int weights,String notes,String date) {
 
         ContentValues initialValues = new ContentValues();
 
@@ -88,6 +90,7 @@ private static class DatabaseHelper extends SQLiteOpenHelper {
         initialValues.put(KEY_REPS, reps);
         initialValues.put(KEY_WEIGHTS, weights);
         initialValues.put(KEY_NOTES, notes);
+        initialValues.put(KEY_DATE, date);
 
         return mDb.insert(SQLITE_TABLE, null, initialValues);
     }
@@ -126,7 +129,7 @@ private static class DatabaseHelper extends SQLiteOpenHelper {
     public Cursor fetchAllExercises() {
 
         Cursor mCursor = mDb.query(SQLITE_TABLE, new String[] {KEY_ROWID,
-                         KEY_NAME, KEY_SERIES,KEY_REPS,KEY_WEIGHTS,KEY_NOTES},
+                         KEY_NAME, KEY_SERIES,KEY_REPS,KEY_WEIGHTS,KEY_NOTES,KEY_DATE},
                 null, null, null, null, null);
 
         if (mCursor != null) {
@@ -138,17 +141,17 @@ private static class DatabaseHelper extends SQLiteOpenHelper {
     // metoda do testów
     public void insertSomeExercises() {
 
-        createExercise("Podnoszenie sztangielek na barki",1,15,0,"Ostatnia seria byla niepelna");
-        createExercise("Przysiady ze sztanga",3,10,30,"Z kazda seria zwiekszalem ciezar o 10kg");
-        createExercise("Podnoszenie sztangielek na barki",1,15,0,"Ostatnia seria byla niepelna");
-        createExercise("Przysiady ze sztanga",3,10,30,"Z kazda seria zwiekszalem ciezar o 10kg");
+        createExercise("a",1,15,0,"Ostatnia seria byla niepelna","2017-01-03");
+        createExercise("b",3,10,30,"Z kazda seria zwiekszalem ciezar o 10kg","2017-06-03");
+        createExercise("d",1,15,0,"Ostatnia seria byla niepelna","2017-12-30");
+        createExercise("c",3,10,30,"Z kazda seria zwiekszalem ciezar o 10kg","2017-12-03");
 
 
     }
 
     //
-    public boolean deleteRowWithId(long id){
-        return mDb.delete(SQLITE_TABLE,KEY_ROWID+"="+Long.toString(id),null)>0;
+    public boolean deleteRowWithId(int id){
+        return mDb.delete(SQLITE_TABLE,KEY_ROWID+"="+Integer.toString(id),null)>0;
     }
 
 

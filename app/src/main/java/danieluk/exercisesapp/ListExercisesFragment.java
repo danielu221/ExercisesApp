@@ -12,9 +12,11 @@ import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
+import android.widget.TextView;
 
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Created by Danielu on 2017-01-04.
@@ -23,7 +25,6 @@ import java.util.ArrayList;
 public class ListExercisesFragment extends Fragment {
     String TAG="ListExercisesFragment";
     private ExercisesDbAdapter dbHelper;
-    //private SimpleCursorAdapter dataAdapter;
     private ListView listView;
     private ArrayList<Exercise> lExercise=new ArrayList<Exercise>();
     private CustomListAdapter dataAdapter;
@@ -34,7 +35,6 @@ public class ListExercisesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.list_fragment, container, false);
         listView = (ListView) view.findViewById(R.id.listView1);
-
         dbHelper = new ExercisesDbAdapter(getActivity());
         dbHelper.open();
 
@@ -50,7 +50,7 @@ public class ListExercisesFragment extends Fragment {
        listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
                public void onItemClick(AdapterView<?> parent,View view,int position,long id){
                    Exercise exercise=(Exercise) listView.getItemAtPosition(position);
-                   //dbHelper.deleteRowWithId(exercise.getId());
+                   //wysyłam dane do ListDetail
                    Intent intent = new Intent(getContext(),ListDetail.class);
                    intent.putExtra("id",exercise.getId());
                    intent.putExtra("name",exercise.getName());
@@ -58,11 +58,8 @@ public class ListExercisesFragment extends Fragment {
                    intent.putExtra("reps",exercise.getReps());
                    intent.putExtra("weights",exercise.getWeights());
                    intent.putExtra("notes",exercise.getNotes());
-                   //startActivity(intent);
+                   intent.putExtra("date",exercise.getDate());
                    startActivityForResult(intent,REQUEST_CODE);
-                   //lExercise.remove(exercise);
-                   //dataAdapter.notifyDataSetChanged();
-                   //Log.d(TAG,"pozycja" + Integer.toString(position));
                }
        });
 
@@ -72,85 +69,64 @@ public class ListExercisesFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode,int resultCode,Intent data){
         if(requestCode==REQUEST_CODE){
-            if(resultCode==getActivity().RESULT_OK){
-                long id=data.getLongExtra("id",-1);
-                if(id!=-1){
-                    deleteExerciseWithID(id);
-                }
+            int id=data.getIntExtra("id",-1);
+            if(id!=-1){
+                Log.d(TAG,"sukces"+Integer.toString(id));
+                deleteExerciseWithID(id);
+            }
+            else{
+                Log.d(TAG,"Niestety");
             }
         }
-
         super.onActivityResult(requestCode,resultCode,data);
     }
 
 
-    private void deleteExerciseWithID(long id){
+    private void deleteExerciseWithID(int id){
         for(Exercise e:lExercise){
             if( e.getId()==id ){
                 dbHelper.deleteRowWithId(id);
                 lExercise.remove(e);
                 dataAdapter.notifyDataSetChanged();
+                break;
             }
         }
     }
     private void displayListView() {
         Cursor cursor = dbHelper.fetchAllExercises();
 
-        /*
-        // The desired columns to be bound
-        String[] columns = new String[]{
-                ExercisesDbAdapter.KEY_NAME,
-                ExercisesDbAdapter.KEY_SERIES,
-                ExercisesDbAdapter.KEY_REPS
-                //CountriesDbAdapter.KEY_CONTINENT,
-                // CountriesDbAdapter.KEY_REGION,
-                // CountriesDbAdapter.KEY_NUM
-        };
+        cursor.moveToFirst();
+        while (cursor.moveToNext()) {
+            int _id = cursor.getColumnIndex(ExercisesDbAdapter.KEY_ROWID);
+            int name = cursor.getColumnIndex(ExercisesDbAdapter.KEY_NAME);
+            int series = cursor.getColumnIndex(ExercisesDbAdapter.KEY_SERIES);
+            int reps = cursor.getColumnIndex(ExercisesDbAdapter.KEY_REPS);
+            int weights = cursor.getColumnIndex(ExercisesDbAdapter.KEY_WEIGHTS);
+            int notes = cursor.getColumnIndex(ExercisesDbAdapter.KEY_NOTES);
+            int date = cursor.getColumnIndex(ExercisesDbAdapter.KEY_DATE);
 
-        // the XML defined views which the data will be bound to
-        int[] to = new int[]{
-                R.id.item_name,
-                R.id.item_series,
-                R.id.item_reps
-                // R.id.continent,
-                // R.id.region,
-                // R.id.num
-        };
-
-        // create the adapter using the cursor pointing to the desired data
-        //as well as the layout information
-        dataAdapter = new SimpleCursorAdapter(
-                getActivity(), R.layout.exercise_info,
-                cursor,
-                columns,
-                to,
-                0);
-                */
-
-            cursor.moveToFirst();
-            while (cursor.moveToNext()) {
-                int _id = cursor.getColumnIndex(ExercisesDbAdapter.KEY_ROWID);
-                int name = cursor.getColumnIndex(ExercisesDbAdapter.KEY_NAME);
-                int series = cursor.getColumnIndex(ExercisesDbAdapter.KEY_SERIES);
-                int reps = cursor.getColumnIndex(ExercisesDbAdapter.KEY_REPS);
-                int weights = cursor.getColumnIndex(ExercisesDbAdapter.KEY_WEIGHTS);
-                int notes = cursor.getColumnIndex(ExercisesDbAdapter.KEY_NOTES);
+            Exercise exercise = new Exercise();
+            exercise.setId(cursor.getInt(_id));
+            exercise.setName(cursor.getString(name));
+            exercise.setSeries(cursor.getInt(series));
+            exercise.setReps(cursor.getInt(reps));
+            exercise.setWeights(cursor.getInt(weights));
+            exercise.setNotes(cursor.getString(notes));
+            exercise.setDate(cursor.getString(date));
 
 
-                Exercise exercise = new Exercise();
-                exercise.setId(cursor.getInt(_id));
-                exercise.setName(cursor.getString(name));
-                exercise.setSeries(cursor.getInt(series));
-                exercise.setReps(cursor.getInt(reps));
-                exercise.setWeights(cursor.getInt(weights));
-                exercise.setNotes(cursor.getString(notes));
-                lExercise.add(exercise);
-            }
-            dataAdapter = new CustomListAdapter(getActivity(), 0, lExercise);
-            // Assign adapter to ListView
-            listView.setAdapter(dataAdapter);
+            lExercise.add(exercise);
+        }
 
-        //dbHelper.close();
+        Collections.sort(lExercise);
+
+
+        dataAdapter = new CustomListAdapter(getActivity(),0, lExercise);
+        // Assign adapter to ListView
+        listView.setAdapter(dataAdapter);
+
+
     }
+
 }
 

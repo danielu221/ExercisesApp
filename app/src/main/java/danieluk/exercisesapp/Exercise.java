@@ -4,7 +4,7 @@ package danieluk.exercisesapp;
  * Created by Danielu on 2017-01-03.
  */
 
-public class Exercise {
+public class Exercise implements Comparable<Exercise> {
 
     /**
      * Created by Danielu on 2017-01-03.
@@ -15,6 +15,19 @@ public class Exercise {
     int reps;
     int weights;
     String notes;
+    String date;
+
+    public int compareTo(Exercise other){
+        return date.compareTo(other.date);
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
 
     public int getId() {
         return id;
