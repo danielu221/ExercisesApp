@@ -103,28 +103,6 @@ private static class DatabaseHelper extends SQLiteOpenHelper {
         return doneDelete > 0;
 
     }
-/*
-    public Cursor fetchCountriesByName(String inputText) throws SQLException {
-        Log.w(TAG, inputText);
-        Cursor mCursor = null;
-        if (inputText == null  ||  inputText.length () == 0)  {
-            mCursor = mDb.query(SQLITE_TABLE, new String[] {KEY_ROWID,
-                            KEY_NAME, KEY_SERIES},
-                    null, null, null, null, null);
-
-        }
-        else {
-            mCursor = mDb.query(true, SQLITE_TABLE, new String[] {KEY_ROWID,
-                            KEY_NAME, KEY_SERIES},
-                    KEY_NAME + " like '%" + inputText + "%'", null,
-                    null, null, null, null);
-        }
-        if (mCursor != null) {
-            mCursor.moveToFirst();
-        }
-        return mCursor;
-
-    }*/
 
     public Cursor fetchAllExercises() {
 

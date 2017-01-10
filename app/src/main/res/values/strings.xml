@@ -6,6 +6,7 @@
     <string name="hint_reps">Reps</string>
     <string name="hint_weights">Weights (kg)</string>
     <string name="hint_notes">Your own notes</string>
+    <string name="hint_date">Date</string>
     <string name="btn_enter">Enter</string>
     <string name="err_msg_name">Enter your full name</string>
     <string name="err_msg_series">Enter right series value (series > 0)</string>

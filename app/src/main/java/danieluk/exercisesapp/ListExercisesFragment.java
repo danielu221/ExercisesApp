@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import java.util.ArrayList;
@@ -69,10 +70,12 @@ public class ListExercisesFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode,int resultCode,Intent data){
         if(requestCode==REQUEST_CODE){
+            
             int id=data.getIntExtra("id",-1);
             if(id!=-1){
                 Log.d(TAG,"sukces"+Integer.toString(id));
                 deleteExerciseWithID(id);
+                Toast.makeText(getActivity().getApplicationContext(), "Exercise deleted!", Toast.LENGTH_SHORT).show();
             }
             else{
                 Log.d(TAG,"Niestety");

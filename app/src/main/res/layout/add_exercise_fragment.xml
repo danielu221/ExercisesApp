@@ -7,7 +7,6 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="?attr/actionBarSize"
         android:orientation="vertical"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
@@ -79,10 +78,24 @@
             <EditText
                 android:id="@+id/input_notes"
                 android:layout_width="match_parent"
-                android:layout_height="57dp"
-                android:maxLines="3"
+                android:layout_height="80dp"
+                android:maxLines="2"
                 android:hint="@string/hint_notes"
                 android:maxLength="250"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/input_layout_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/input_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:hint="@string/hint_date"
+            android:focusable="false"/>
         </android.support.design.widget.TextInputLayout>
 
         <Button android:id="@+id/btn_enter"
@@ -90,8 +103,10 @@
             android:layout_height="wrap_content"
             android:text="@string/btn_enter"
             android:background="@color/colorPrimary"
-            android:layout_marginTop="75dp"
+            android:layout_marginTop="30dp"
             android:textColor="@android:color/white"/>
 
     </LinearLayout>
+
+
 </FrameLayout>

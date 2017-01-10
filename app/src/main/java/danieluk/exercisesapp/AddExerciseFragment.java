@@ -2,6 +2,7 @@ package danieluk.exercisesapp;
 
 
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
@@ -10,10 +11,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -23,9 +26,10 @@ import java.util.Date;
 public class AddExerciseFragment extends Fragment {
     private ExercisesDbAdapter dbHelper;
     private TextInputLayout inputLayoutName,inputLayoutSeries,inputLayoutReps,inputLayoutWeights;
-    private EditText inputName,inputSeries,inputReps,inputWeights,inputNotes;
+    private EditText inputName,inputSeries,inputReps,inputWeights,inputNotes,inputDate;
     private Button btnEnter;
-
+    Calendar myCalendar;
+    DatePickerDialog.OnDateSetListener date;
 
     public AddExerciseFragment(){}
     @Override
@@ -41,6 +45,35 @@ public class AddExerciseFragment extends Fragment {
         inputReps=(EditText) view.findViewById(R.id.input_reps);
         inputWeights=(EditText) view.findViewById(R.id.input_weights);
         inputNotes=(EditText) view.findViewById(R.id.input_notes);
+        inputDate=(EditText) view.findViewById(R.id.input_date);
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String dateNow=sdf.format(new Date());
+        inputDate.setText(dateNow);
+        myCalendar = Calendar.getInstance();
+
+        // ustawianie daty na podstawie kalendarza
+        date = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear,
+                                  int dayOfMonth) {
+                // TODO Auto-generated method stub
+                myCalendar.set(Calendar.YEAR, year);
+                myCalendar.set(Calendar.MONTH, monthOfYear);
+                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                updateLabel(); // ustawianie aktualnej wartości pola
+            }
+
+        };
+
+        inputDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new DatePickerDialog(getContext(), date, myCalendar
+                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
 
         btnEnter=(Button) view.findViewById(R.id.btn_enter);
 
@@ -52,6 +85,12 @@ public class AddExerciseFragment extends Fragment {
         });
         return view;
     }
+
+    private void updateLabel(){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        inputDate.setText(sdf.format(myCalendar.getTime()));
+    }
+
     // submitForm - sprawdzenie, czy wymagane pola są uzupełnione
     // i ewentualne dodanie do bazy danych
     private void submitForm() {
@@ -76,12 +115,9 @@ public class AddExerciseFragment extends Fragment {
         int inputRepsInt=Integer.parseInt(inputReps.getText().toString());
         int inputWeightsInt=Integer.parseInt(inputWeights.getText().toString());
         String inputNotesStr=inputNotes.getText().toString();
+        String inputDateStr=inputDate.getText().toString();
 
-        //dodawanie daty
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        String date=sdf.format(new Date());
-
-        dbHelper.createExercise(inputNameStr,inputSeriesInt,inputRepsInt,inputWeightsInt,inputNotesStr,date);
+        dbHelper.createExercise(inputNameStr,inputSeriesInt,inputRepsInt,inputWeightsInt,inputNotesStr,inputDateStr);
         dbHelper.close();
 
         clearInputs();
