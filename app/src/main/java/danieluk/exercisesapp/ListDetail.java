@@ -8,6 +8,14 @@ import android.view.View;
 import android.view.ViewDebug;
 import android.widget.Button;
 import android.widget.TextView;
+
+/**
+  ListDetail- klasa zawierająca informacje szczegółowe o ćwiczeniu,
+    posiada przycisk umożliwiający usuwanie danego ćwiczenia,
+    informacje wyświetlane się dzięki zastosowaniu klasy Intent,
+    komunikacja z klasą LisExercisesFragment
+
+ */
 public class ListDetail extends AppCompatActivity {
     String TAG="ListDetails";
 

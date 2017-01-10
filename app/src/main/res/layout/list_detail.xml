@@ -132,17 +132,6 @@
         android:layout_centerHorizontal="true" />
 
     <Button
-        android:text="Edit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/btn_edit"
-        style="@style/Widget.AppCompat.Button.Colored"
-        android:background="@color/colorPrimary"
-        android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@+id/textView3"
-        android:layout_toEndOf="@+id/textView3" />
-
-    <Button
         android:text="Delete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -150,9 +139,7 @@
         style="@style/Widget.AppCompat.Button.Colored"
         android:background="@android:color/holo_red_dark"
         android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@+id/btn_edit"
-        android:layout_toEndOf="@+id/btn_edit"
-        android:layout_marginLeft="50sp"/>
+        android:layout_centerHorizontal="true" />
 
 
 </RelativeLayout>

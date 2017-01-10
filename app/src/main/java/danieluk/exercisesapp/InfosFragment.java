@@ -7,14 +7,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 /**
- * Created by Danielu on 2017-01-04.
+ * InfosFragment - fragment będący informacjami na temat aplikacji
  */
 
-public class HistoryFragment extends Fragment {
-    public HistoryFragment(){}
+public class InfosFragment extends Fragment {
+    public InfosFragment(){}
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-            return inflater.inflate(R.layout.history_fragment, container, false);
+            return inflater.inflate(R.layout.infos_fragment, container, false);
         }
 }
 

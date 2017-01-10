@@ -13,4 +13,14 @@
     <string name="err_msg_reps">Enter right reps value (reps > 0)</string>
     <string name="err_msg_weights">Enter right weights value (weights >= 0)</string>
 
+    <string name="infos_text"> "ExercisesApp was created by Mateusz Danieluk, to manage your workouts.
+        It is really simple.
+        \nADDING EXERCISE\n
+        Just choose 'add Exercise' from menu in the bottom and type necessary information about your exercise.
+        When you are not using any weights put '0' there. When you want to change exercise's date, click on current date and set right date by choosing it from calendar.
+        \nGET EXERCISE'S DETAILS\n
+        When you are watching exercises list's page you can click on each exercise and see all informations about it.
+        There is also delete button to remove it."
+        </string>
+
 </resources>

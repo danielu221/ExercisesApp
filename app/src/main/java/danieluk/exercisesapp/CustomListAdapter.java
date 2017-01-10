@@ -14,7 +14,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 /**
- * Created by Danielu on 2017-01-06.
+ * CustomListAdapter - klasa używana przy tworzeniu ListView
  */
 
 public class CustomListAdapter extends ArrayAdapter<Exercise> {
@@ -70,6 +70,8 @@ public class CustomListAdapter extends ArrayAdapter<Exercise> {
             TextView reps=(TextView)vi.findViewById(R.id.item_reps);
             TextView date=(TextView)vi.findViewById(R.id.item_date);
 
+            //warunki potrzebne do pokazywania/ukrywania headera z datą,
+            // każda sekcja ma ćiwczenia wykonywane w danym dniu
             if (prevDate == null || !prevDate.equals(thisDate) || position==0) {
                date.setVisibility(View.VISIBLE);
             } else {

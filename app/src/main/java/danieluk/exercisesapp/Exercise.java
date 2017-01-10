@@ -1,14 +1,11 @@
 package danieluk.exercisesapp;
 
 /**
- * Created by Danielu on 2017-01-03.
+ * Exercise- klasa do tworzenia obiektów będącymi ćwiczeniami
  */
 
 public class Exercise implements Comparable<Exercise> {
 
-    /**
-     * Created by Danielu on 2017-01-03.
-     */
     int id;
     String name;
     int series;

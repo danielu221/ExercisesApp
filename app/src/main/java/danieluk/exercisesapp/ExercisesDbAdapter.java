@@ -9,7 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 /**
- * Created by Danielu on 2017-01-03.
+ * ExercisesDbAdapter- klasa wspomagająca tworzenie/zarządzanie bazą SQLite
  */
 
 public class ExercisesDbAdapter{

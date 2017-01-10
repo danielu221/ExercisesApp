@@ -20,7 +20,9 @@ import java.util.Calendar;
 import java.util.Date;
 
 /**
- * Created by Danielu on 2017-01-04.
+ * AddExerciseFragment - fragment odpowiedzialny za dodawanie ćwiczeń
+ *
+ *
  */
 
 public class AddExerciseFragment extends Fragment {
@@ -85,7 +87,7 @@ public class AddExerciseFragment extends Fragment {
         });
         return view;
     }
-
+    // ustawienie wprowadzonej daty, na te wybrana z kalendarza
     private void updateLabel(){
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         inputDate.setText(sdf.format(myCalendar.getTime()));

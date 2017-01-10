@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 /**
- * Created by Danielu on 2017-01-04.
+ * ListExercisesFragment- klasa odpowiedzialna za wyświetlanie listy ćwiczeń
  */
 
 public class ListExercisesFragment extends Fragment {
@@ -48,6 +48,7 @@ public class ListExercisesFragment extends Fragment {
         //wygeneruj listę z bazy danych
         displayListView();
 
+        //po naciśnięciu na element listy, wyślij informacje do klasy ListDetails za pomocą Intent
        listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
                public void onItemClick(AdapterView<?> parent,View view,int position,long id){
                    Exercise exercise=(Exercise) listView.getItemAtPosition(position);
@@ -66,11 +67,11 @@ public class ListExercisesFragment extends Fragment {
 
         return view;
     }
-
+    // przy otrzymaniu zwrotnego sygnału z klasy ListDetail
     @Override
     public void onActivityResult(int requestCode,int resultCode,Intent data){
         if(requestCode==REQUEST_CODE){
-            
+
             int id=data.getIntExtra("id",-1);
             if(id!=-1){
                 Log.d(TAG,"sukces"+Integer.toString(id));
@@ -125,7 +126,7 @@ public class ListExercisesFragment extends Fragment {
 
 
         dataAdapter = new CustomListAdapter(getActivity(),0, lExercise);
-        // Assign adapter to ListView
+        // Przypisz dataAdapter do listView
         listView.setAdapter(dataAdapter);
 
 
