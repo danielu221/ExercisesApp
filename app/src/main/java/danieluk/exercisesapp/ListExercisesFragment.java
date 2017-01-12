@@ -122,7 +122,7 @@ public class ListExercisesFragment extends Fragment {
             lExercise.add(exercise);
         }
 
-        Collections.sort(lExercise);
+        Collections.sort(lExercise,Collections.reverseOrder());
 
 
         dataAdapter = new CustomListAdapter(getActivity(),0, lExercise);

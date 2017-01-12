@@ -139,9 +139,9 @@ public class AddExerciseFragment extends Fragment {
         return true;
     }
     private boolean validateSeries() {
-        String email = inputSeries.getText().toString().trim();
+        String series = inputSeries.getText().toString().trim();
 
-        if (email.isEmpty() ) {
+        if (series.isEmpty() ) {
             inputLayoutSeries.setError(getString(R.string.err_msg_series));
             requestFocus(inputSeries);
             return false;

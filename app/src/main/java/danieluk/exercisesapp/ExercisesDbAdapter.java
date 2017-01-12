@@ -123,8 +123,6 @@ private static class DatabaseHelper extends SQLiteOpenHelper {
         createExercise("b",3,10,30,"Z kazda seria zwiekszalem ciezar o 10kg","2017-06-03");
         createExercise("d",1,15,0,"Ostatnia seria byla niepelna","2017-12-30");
         createExercise("c",3,10,30,"Z kazda seria zwiekszalem ciezar o 10kg","2017-12-03");
-
-
     }
 
     //
